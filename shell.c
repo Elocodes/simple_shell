@@ -1,28 +1,27 @@
 #include "shell.h"
 /**
-  * main - implement "ls -l /tmp"
+  * main - entry point to simple shell program"
+  *
+  * Return: 0 for success
   */
-int main(int argc, char **argv)
+int main(void)
 {
+	char *cmd;
 	char **tokens;
-	char *buff = NULL;
-	size_t bufsize;
+	char **envp = {NULL};
 
-	int mode = 1;
-	while (mode)
+	while (1)
 	{
-		mode = isatty(STDIN_FILENO);
-		if (mode == 1)
-			write(STDOUT_FILENO, "$ ", 3);
-		if (getline(&buff, &bufsize, stdin) == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: reading line\n");
-		}
+		printf("$ ");
 
-		printf("TWO %s", buff);
-		tokens = get_token(buff);
+		cmd = read_line();
+
+		tokens = get_token(cmd);
+
 		execute(tokens);
-	}
 
+		free(tokens);
+		free(cmd);
+	}
 	return (0);
 }

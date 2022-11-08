@@ -1,69 +1,75 @@
 #include "shell.h"
 
-int execute(char **str)
-{
-	int status;
-	char *path;
-	char **envstr = {NULL};
-	pid_t pid;
-
-
-
-	pid = fork();
-
-	if (pid == 0)
-	{
-		if (execve(path, str, envstr) == -1)
-		{
-			dprintf(2, "Error executing\n");
-		}
-	}
-	else
-	{
-		wait(&status);
-	}
-
-
-}
+int linelen(char *str, char *del);
+int countword(char *str, char *del);
 /**
   * get_token - get an array of the strings passed in the line
+  * @line: pointer to the line to be tokenized
+  * Return: pointer to array of tokens
   */
 char **get_token(char *line)
 {
-
 	char *tok;
-	char *del = " ";
 	char **tokens;
-	int i = 0;
+	char *del = " \n\t";
+	int count = 0, i = 0;
 
 	if (line == NULL)
 	{
-		return (NULL);
+		exit(1);
 	}
 
-	tokens = malloc(sizeof(char *) * 64);
+	count = countword(line, del);
+	tokens = malloc(sizeof(char *) * (count + 1));
+
 	tok = strtok(line, del);
-	while (tok != NULL)
+	while (tok)
 	{
-		tokens[i] = strdup(tok);
-		i++;
+		tokens[i] = tok;
 		tok = strtok(NULL, del);
+		i++;
 	}
 	tokens[i] = tok;
 
 	return (tokens);
 }
 /**
-int main(int argc, char **argv)
+  * linelen - gets the length of character in a token
+  * @str: line
+  * @del: the delimiter
+  * Returns: len of token
+  */
+int linelen(char *str, char *del)
 {
-	char **tok;
-	if (argc != 2)
-	{
-		dprintf(2, "Error 1\n");
-	}
-	printf("%s\n", argv[1]);
-	tok = get_token(argv[1], " ");
+	int len = 0, i =0;
 
-	printf("%s\n", tok[0]);
-	return (0);
-}*/
+	while (str[i] && str[i] != *del)
+	{
+		len++;
+		i++;
+	}
+	return (len);
+}
+/**
+  * countword - number of tokens, separated by delimiter
+  * @str: line
+  * @del: delimkiter
+  * Return: Number of tokens
+  */
+int countword(char *str, char *del)
+{
+	int word = 0, i = 0, len = 0;
+
+	for (i = 0; str[i]; i++)
+		len++;
+
+	for (i = 0; i < len; i++)
+	{
+		if (str[i] != *del)
+		{
+			word++;
+			i += linelen(str + i, del);
+		}
+	}
+	return (word);
+}
