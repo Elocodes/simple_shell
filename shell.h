@@ -15,10 +15,11 @@
   * @cmd: buitin command
   * @func: pointer to function
   */
-typedef struct run_commands {
+typedef struct run_commands
+{
 	     char *cmd;
-	     int (*func) (char **);
- } commands;
+	     int (*func)(char **);
+} commands;
 
 
 extern char **environ;
