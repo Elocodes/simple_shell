@@ -9,10 +9,11 @@ char *read_line(void)
 	size_t bufsize = 0;
 	int buflen;
 
-	if (buflen = getline(&buf, &bufsize, stdin) == -1)
+	if ((buflen = (getline(&buf, &bufsize, stdin))) == -1)
 	{
-		dprintf(2, "Error: reading from line\n");
-		free(buf);
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "\n", 1);
+		return (NULL);
 	}
 	if (buf[buflen - 1] == '\n')
 		buf[buflen - 1] = '\0';

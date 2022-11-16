@@ -4,40 +4,41 @@ int linelen(char *str, char *del);
 int countword(char *str, char *del);
 /**
   * get_token - get an array of the strings passed in the line
-  * @line: pointer to the line to be tokenized
-  * Return: pointer to array of tokens
+  * @line: pointer to read line 
+  * @del: pointer to cdelimiter
+  * Return: array of tokens
   */
-char **get_token(char *line)
+char **get_token(char *line, char *del)
 {
-	char *tok;
-	char **tokens;
-	char *del = " \n\t";
+	char *tok = NULL;
+	char *temp = NULL;
+	char **tokens = NULL;
 	int count = 0, i = 0;
-
-	if (line == NULL)
-	{
-		exit(1);
-	}
 
 	count = countword(line, del);
 	tokens = malloc(sizeof(char *) * (count + 1));
 
+	if (tokens == NULL)
+		return (NULL);
+
+	line = remove_new_line(line);
+	temp = strdup(line);
 	tok = strtok(line, del);
 	while (tok)
 	{
-		tokens[i] = tok;
+		tokens[i] = strdup(tok);
 		tok = strtok(NULL, del);
 		i++;
 	}
-	tokens[i] = tok;
-
+	tokens[i] = NULL;
+	free(temp);
 	return (tokens);
 }
 /**
-  * linelen - gets the length of character in a token
-  * @str: line
-  * @del: the delimiter
-  * Returns: len of token
+  * linelen - counts the len of word in the read line
+  * @str: pointer to the line
+  * @del: pointer to delimiter
+  * Return: num of chars
   */
 int linelen(char *str, char *del)
 {
@@ -50,11 +51,12 @@ int linelen(char *str, char *del)
 	}
 	return (len);
 }
+
 /**
-  * countword - number of tokens, separated by delimiter
-  * @str: line
-  * @del: delimkiter
-  * Return: Number of tokens
+  * countword - counts number of words
+  * @str: pointer to the line
+  * @del: pointer to delimiter
+  * Return: number of words
   */
 int countword(char *str, char *del)
 {
