@@ -4,7 +4,7 @@ int linelen(char *str, char *del);
 int countword(char *str, char *del);
 /**
   * get_token - get an array of the strings passed in the line
-  * @line: pointer to read line 
+  * @line: pointer to read line
   * @del: pointer to cdelimiter
   * Return: array of tokens
   */
@@ -42,7 +42,7 @@ char **get_token(char *line, char *del)
   */
 int linelen(char *str, char *del)
 {
-	int len = 0, i =0;
+	int len = 0, i = 0;
 
 	while (str[i] && str[i] != *del)
 	{

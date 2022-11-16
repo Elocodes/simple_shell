@@ -1,10 +1,9 @@
 #include "shell.h"
 
 /**
-  * run_command - Gets the functions for builtin command 
+  * run_command - Gets the functions for builtin command
   * @cmd: buitin command arg
-  * @tokens: tokens
-  * Returns: pointer to function
+  * Return: pointer to function
   */
 int (*run_command(char *cmd))(char **tokens)
 {
@@ -17,10 +16,11 @@ int (*run_command(char *cmd))(char **tokens)
 		 {NULL, NULL}
 	 };
 	int i;
+
 	for (i = 0; allcommand[i].cmd; i++)
 	{
 		if (strcmp(allcommand[i].cmd, cmd) == 0)
-		{	
+		{
 			return (allcommand[i].func);
 		}
 	}
@@ -33,7 +33,7 @@ int (*run_command(char *cmd))(char **tokens)
 
 /**
   * handle_chdir - change directory
-  * @tokens: pointer to array of cmd line 
+  * @tokens: pointer to array of cmd line
   * Return: interger
   */
 int handle_chdir(char **tokens)

@@ -9,7 +9,8 @@ char *read_line(void)
 	size_t bufsize = 0;
 	int buflen;
 
-	if ((buflen = (getline(&buf, &bufsize, stdin))) == -1)
+	buflen = getline(&buf, &bufsize, stdin);
+	if (buflen == -1)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "\n", 1);
