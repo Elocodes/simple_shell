@@ -16,7 +16,7 @@ int main(void)
 	{
 		signal(SIGINT, signal_handler);
 		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "$ ", 2);
+			write(STDOUT_FILENO, "($) ", 4);
 		line = read_line();
 		if (line_len == -1)
 		{

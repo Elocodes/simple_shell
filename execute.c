@@ -84,18 +84,18 @@ int exec(char *cname, char **opts)
 	pid_t child;
 	int status;
 
-	switch (child = fork())
+	child = fork();
+	if (child < -1)
 	{
-		case -1:
-			perror("fork failed");
-			return (-1);
-		case 0:
-			execve(cname, opts, environ);
-		default:
-			do {
-				waitpid(child, &status, WUNTRACED);
-			} while (WIFEXITED(status) == 0 && WIFSIGNALED(status) == 0);
+		perror("New Process failed");
+	} else if (child == 0)
+	{
+		execve(cname, opts, environ);
+	} else
+	{
+		do {
+			waitpid(child, &status,     WUNTRACED);
+		} while (WIFEXITED(status) == 0     && WIFSIGNALED(status) == 0);
 	}
-
 	return (0);
 }

@@ -44,7 +44,7 @@ void frees_tokens(char **tokns)
 void signal_handler(int sig_id)
 {
 	if (sig_id == SIGINT)
-		write(STDOUT_FILENO, "\n$ ", 3);
+		write(STDOUT_FILENO, "\n($) ", 5);
 }
 
 #include "shell.h"

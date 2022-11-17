@@ -50,7 +50,7 @@ int handle_chdir(char **tokens)
   * @tokens: pointer to array of cmd line
   * Return: 1
   */
-int handle_help(char **tokens)
+int handle_help(char __attribute__((unused)) **tokens)
 {
 	_puts("\n***HSH HELP PAGE***\n");
 	return (1);
@@ -60,7 +60,7 @@ int handle_help(char **tokens)
   * @tokens: pointer to array of cmd line arguments
   * Return: 1
   */
-int print_env(char **tokens)
+int print_env(char __attribute__((unused)) **tokens)
 {
 	int i, j = 0;
 
@@ -83,7 +83,7 @@ int print_env(char **tokens)
   * @tokens: pointer to array of cmd arguments
   * Return: integers
   */
-int handle_exit(char **tokens)
+int handle_exit(char __attribute__((unused)) **tokens)
 {
 	int status = 0;
 
