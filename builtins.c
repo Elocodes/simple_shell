@@ -5,7 +5,7 @@
   * @cmd: buitin command arg
   * Return: pointer to function
   */
-int (*run_command(char *cmd))(char **tokens)
+int (*run_command(char *cmd))(char **tokens, char *line)
 {
 
 	commands allcommand[] = {
@@ -36,31 +36,45 @@ int (*run_command(char *cmd))(char **tokens)
   * @tokens: pointer to array of cmd line
   * Return: interger
   */
-int handle_chdir(char **tokens)
+int handle_chdir(char **tokens, char *line)
 {
+	char *home;
+
 	if (tokens[1])
 	{
 		chdir(tokens[1]);
-		return (1);
+		frees_tokens(tokens);
+		free(line);
+		exit (0);
+	} else
+	{
+		home = _getenv("HOME");
+		chdir(home);
+		frees_tokens(tokens);
+		free(line);
 	}
-	return (1);
+	frees_tokens(tokens);
+	free(line);
+	exit (0);
 }
 /**
   * handle_help - print the help page
   * @tokens: pointer to array of cmd line
   * Return: 1
   */
-int handle_help(char __attribute__((unused)) **tokens)
+int handle_help(char __attribute__((unused)) **tokens, char *line)
 {
 	_puts("\n***HSH HELP PAGE***\n");
-	return (1);
+	frees_tokens(tokens);
+	free(line);
+	exit (0);
 }
 /**
   * print_env - print environmental variables
   * @tokens: pointer to array of cmd line arguments
   * Return: 1
   */
-int print_env(char __attribute__((unused)) **tokens)
+int print_env(char __attribute__((unused)) **tokens, char *line)
 {
 	int i, j = 0;
 
@@ -76,14 +90,16 @@ int print_env(char __attribute__((unused)) **tokens)
 			_putchar('\n');
 		j++;
 	}
-	return (1);
+	frees_tokens(tokens);
+	free(line);
+	exit(0);
 }
 /**
   * handle_exit - handles exit out of the command line
   * @tokens: pointer to array of cmd arguments
   * Return: integers
   */
-int handle_exit(char __attribute__((unused)) **tokens)
+int handle_exit(char __attribute__((unused)) **tokens, char *line)
 {
 	int status = 0;
 
@@ -107,5 +123,6 @@ int handle_exit(char __attribute__((unused)) **tokens)
 	}
 
 	frees_tokens(tokens);
+	free(line);
 	exit(EXIT_SUCCESS);
 }

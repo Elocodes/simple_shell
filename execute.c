@@ -91,10 +91,12 @@ int exec(char *cname, char **opts)
 	} else if (child == 0)
 	{
 		execve(cname, opts, environ);
+		exit(0);
 	} else
 	{
 		do {
 			waitpid(child, &status,     WUNTRACED);
+			wait(0);
 		} while (WIFEXITED(status) == 0     && WIFSIGNALED(status) == 0);
 	}
 	return (0);

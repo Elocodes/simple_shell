@@ -18,7 +18,7 @@
 typedef struct run_commands
 {
 	     char *cmd;
-	     int (*func)(char **);
+	     int (*func)(char **, char *);
 } commands;
 
 
@@ -37,12 +37,12 @@ int count_input(char *str);
 int count_delims(char *, char *);
 char *remove_new_line(char *);
 void signal_handler(int);
-int handle_help(char **);
-int print_env(char **);
-int handle_exit(char **);
-int handle_chdir(char **);
+int handle_help(char **, char *);
+int print_env(char **, char *);
+int handle_exit(char **, char *);
+int handle_chdir(char **, char *);
 char *read_line(void);
-int (*run_command(char *))(char **);
+int (*run_command(char *))(char **, char *);
 void frees_get_env(char *env_path);
 void frees_tokens(char **);
 int exec(char *cname, char **opts);

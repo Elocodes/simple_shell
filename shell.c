@@ -9,14 +9,14 @@ int main(void)
 {
 	char *line = NULL, **tokens = NULL;
 	int w_len = 0;
-	int (*fptr)(char **tokens);
+	int (*fptr)(char **tokens, char *line);
 	ssize_t line_len = 0;
 
 	while (line_len >= 0)
 	{
 		signal(SIGINT, signal_handler);
 		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "($) ", 4);
+			write(STDOUT_FILENO, "$ ", 2);
 		line = read_line();
 		if (line_len == -1)
 		{
@@ -38,12 +38,11 @@ int main(void)
 					perror("./hsh");
 			}
 			else
-				fptr(tokens);
+				fptr(tokens, line);
 
 			frees_tokens(tokens);
 		}
 	}
 
-	free(line);
 	return (0);
 }
