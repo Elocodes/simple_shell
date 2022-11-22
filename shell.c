@@ -17,6 +17,11 @@ int main(void)
 		signal(SIGINT, signal_handler);
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "($) ", 4);
+		else
+		{
+			write(STDOUT_FILENO, "$ ", 2);
+			exit(0);
+		}
 		line = read_line();
 		if (line_len == -1)
 		{
@@ -28,6 +33,7 @@ int main(void)
 		if (line[0] != '\n' && w_len > 0)
 		{
 			tokens = get_token(line, " \t");
+			free(line);
 			fptr = run_command(tokens[0]); /* runs and returns builtin func */
 			if (!fptr) /* checks that its not a buitin command */
 			{
@@ -44,6 +50,5 @@ int main(void)
 		}
 	}
 
-	free(line);
 	return (0);
 }
