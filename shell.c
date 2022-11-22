@@ -20,10 +20,10 @@ int main(int ac, char **av)
 	{
 		signal(SIGINT, signal_handler);
 		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "$ ", 2);
+			write(STDOUT_FILENO, "($) ", 4);
 		else
 		{
-			write(STDOUT_FILENO, "($) ", 4);
+			write(STDOUT_FILENO, "$ ", 2);
 			exit(0);
 		}
 		line = read_line();
