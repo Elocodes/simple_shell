@@ -9,7 +9,7 @@ int main(void)
 {
 	char *line = NULL, **tokens = NULL;
 	int w_len = 0;
-	int (*fptr)(char **tokens);
+	int (*fptr)(char **tokens, char *line);
 	ssize_t line_len = 0;
 
 	while (line_len >= 0)
@@ -44,7 +44,7 @@ int main(void)
 					perror("./hsh");
 			}
 			else
-				fptr(tokens);
+				fptr(tokens, line);
 
 			frees_tokens(tokens);
 		}
