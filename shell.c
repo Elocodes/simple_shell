@@ -5,21 +5,25 @@
   *
   * Return: Always zero.
   */
-int main(void)
+int main(int ac, char **av)
 {
 	char *line = NULL, **tokens = NULL;
 	int w_len = 0;
 	int (*fptr)(char **tokens, char *line);
 	ssize_t line_len = 0;
 
+	if (ac == 2)
+	{
+		line = av[1];
+	}
 	while (line_len >= 0)
 	{
 		signal(SIGINT, signal_handler);
 		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "($) ", 4);
+			write(STDOUT_FILENO, "$ ", 2);
 		else
 		{
-			write(STDOUT_FILENO, "$ ", 2);
+			write(STDOUT_FILENO, "($) ", 4);
 			exit(0);
 		}
 		line = read_line();
@@ -41,7 +45,7 @@ int main(void)
 				if (tokens[0] && access(tokens[0], X_OK) == 0)
 					exec(tokens[0], tokens);
 				else
-					perror("./hsh");
+					perror(av[0]);
 			}
 			else
 				fptr(tokens, line);

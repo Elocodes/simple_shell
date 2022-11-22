@@ -16,8 +16,8 @@ char *read_line(void)
 			write(STDOUT_FILENO, "\n", 1);
 		return (NULL);
 	}
-	if (buf[buflen - 1] == '\n')
+/**	if (buf[buflen - 1] == '\n')
 		buf[buflen - 1] = '\0';
-
+*/
 	return (buf);
 }
